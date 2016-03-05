@@ -22,7 +22,7 @@ class CameraThread(threading.Thread):
 			(self.thread_id, self.thread_name))
 		
 		# get camera name
-		camera_id = 0 if len(sys.argv) == 1 else int(sys.argv[1])
+		camera_id = int(sys.argv[1]) if len(sys.argv) > 0 else 0
 		
 		# access camera
 		self.camera = cv2.VideoCapture(camera_id)
