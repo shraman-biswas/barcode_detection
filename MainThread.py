@@ -41,32 +41,30 @@ class MainThread():
 
 	# detect barcode in image
 	def _detect_barcode(self, img):
-		# convert to grayscale
+		# convert image to grayscale
 		gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-		# calculate sobel X gradient
-		grad_x = cv2.Sobel(gray_img, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
+		# calculate Sobel X gradient
+		grad_x = cv2.Sobel(
+			gray_img, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
 		grad_img = cv2.convertScaleAbs(grad_x)
 
-		# remove gradient noise by blurring and extract barcode by thresholding
+		# remove noise by blurring and extract barcode by thresholding
 		blur_img = cv2.blur(grad_img, (9,9))
-		(_, thresh_img) = cv2.threshold(blur_img,
-			225,
-			255, 
-			cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+		(_, thresh_img) = cv2.threshold(
+			blur_img, 225, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
 		# enhance barcode region by morphology
-		morph_img = cv2.morphologyEx(thresh_img,
-			cv2.MORPH_CLOSE,
-			self.kernel,
-			iterations=1)
+		morph_img = cv2.morphologyEx(
+			thresh_img, cv2.MORPH_CLOSE, self.kernel, iterations=1)
 		morph_img = cv2.erode(morph_img, None, iterations=8)
 
 		# find largest contour and calculate bounding box
 		(_, contours, _) = cv2.findContours(morph_img.copy(), 
 			cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 		if len(contours) > 0:
-			cnt = sorted(contours, key=cv2.contourArea, reverse=True)[0]
+			cnt = sorted(
+				contours, key=cv2.contourArea, reverse=True)[0]
 			rect = cv2.minAreaRect(cnt)
 			bbox = np.int0(cv2.boxPoints(rect))
 			return rect, bbox

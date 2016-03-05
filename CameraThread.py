@@ -17,7 +17,8 @@ class CameraThread(threading.Thread):
 
 	# run thread
 	def run(self):
-		self.main_thread.print_text("starting thread: id (%d), name (%s)" %
+		self.main_thread.print_text(
+			"starting thread: id (%d), name (%s)" %
 			(self.thread_id, self.thread_name))
 		
 		# get camera name
@@ -25,7 +26,8 @@ class CameraThread(threading.Thread):
 		
 		# access camera
 		self.camera = cv2.VideoCapture(camera_id)
-		self.main_thread.print_text("accessed camera (id: %d)" % camera_id)
+		self.main_thread.print_text(
+			"accessed camera (id: %d)" % camera_id)
 		
 		# thread loop
 		self.main_thread.print_text("press 'q' to quit")
@@ -43,7 +45,8 @@ class CameraThread(threading.Thread):
 
 	# stop thread
 	def stop(self):
-		self.main_thread.print_text("stopping thread: id (%d), name (%s)" %
+		self.main_thread.print_text(
+			"stopping thread: id (%d), name (%s)" %
 			(self.thread_id, self.thread_name))
 		self.camera.release()
 		self.stopped = True
