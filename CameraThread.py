@@ -21,14 +21,13 @@ class CameraThread(threading.Thread):
 			"starting thread: id (%d), name (%s)" %
 			(self.thread_id, self.thread_name))
 		
-		# get camera name
-		camera_id = int(sys.argv[1]) if len(sys.argv) > 0 else 0
+		# get camera id
+		camera_id = int(sys.argv[1]) if len(sys.argv) > 1 else 0
 		
 		# access camera
 		self.camera = cv2.VideoCapture(camera_id)
-		self.main_thread.print_text(
-			"accessed camera (id: %d)" % camera_id)
-		
+		self.main_thread.print_text("accessed camera")
+
 		# thread loop
 		self.main_thread.print_text("press 'q' to quit")
 		while not self.stopped:
