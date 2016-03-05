@@ -6,5 +6,5 @@ Works on pre-recorded videos and live camera feeds.
 Uses OpenCV 3 for image processing.
 
 Usage: python main.py camid  
-&nbsp;nbsp;
+&nbsp;&nbsp;
 camid: camera id number
